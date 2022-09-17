@@ -1,4 +1,4 @@
-package com.socialmedia.entity;
+ package com.socialmedia.entity;
 
 import java.util.Date;
 

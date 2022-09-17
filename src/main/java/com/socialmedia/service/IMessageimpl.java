@@ -32,9 +32,7 @@ public class IMessageimpl implements MessageService {
 	@Override
 	public List<MessageDTO> GetMessage(Pageable pageable) {
 		List<MessageDTO> listDTO = new ArrayList<>();
-		System.out.println(pageable.getPageNumber()+"-"+pageable.getPageSize());
 		List<Message> listEntity = messageRepo.findAll(pageable).getContent();
-		System.out.println(listEntity);
 		for (Message item : listEntity) {
 			listDTO.add(messageMapper.toDTO(item));
 		}

@@ -2,8 +2,13 @@ package com.socialmedia.entity;
 
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -25,5 +30,9 @@ public class Post extends BaseEntity {
 	private String status;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date datePublished;
-//	private User user;
+	@ManyToOne
+	@JoinColumn(name="user_id")
+	private User user;
+	@OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+	private List<PostComment> postcomments;
 }
