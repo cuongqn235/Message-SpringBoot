@@ -29,5 +29,4 @@ public class Follow extends BaseEntity {
 	@ManyToOne 
     @JoinColumn(name = "follower_id")
 	private	User follower;
-	
 }
