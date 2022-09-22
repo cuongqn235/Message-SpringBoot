@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 
 import com.socialmedia.dto.FollowDTO;
 import com.socialmedia.dto.MessageDTO;
-import com.socialmedia.dto.PostCommentDTO;
 import com.socialmedia.dto.PostDTO;
 import com.socialmedia.dto.RepositoryData;
 import com.socialmedia.dto.UserDTO;
