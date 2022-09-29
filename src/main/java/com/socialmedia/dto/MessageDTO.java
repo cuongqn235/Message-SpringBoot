@@ -10,5 +10,5 @@ public class MessageDTO {
 	private String reciverUserName;
 	private String senderUserName;
 	private String text;
-	private Long sendDate;
+	private String sendDate;
 }

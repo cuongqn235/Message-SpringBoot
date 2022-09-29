@@ -1,6 +1,8 @@
   package com.socialmedia.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,10 +63,10 @@ public class Userimpl implements UserService {
 			UserDTO userDTO = new UserDTO();
 			userDTO = userMapper.toDTO(user);
 			userDTO.setUserProfileDTO(userProfileMapper.toDTO(user.getUserProfile()));
-			return new RepositoryData(ResponseEntity.ok().body(userDTO));
+			return new RepositoryData(ResponseEntity.ok().body(userDTO.getUserProfileDTO()));
 		}
 		else {
-			return new RepositoryData(ResponseEntity.status(HttpStatus.NOT_FOUND).body("Không tìn thấy "+username));
+			return new RepositoryData(ResponseEntity.status(HttpStatus.NOT_FOUND).body("Không tìm thấy "+username));
 		}
 	}
 
@@ -74,12 +76,21 @@ public class Userimpl implements UserService {
 		if(user != null) {
 			UserDTO userDTO = new UserDTO();
 			userDTO = userMapper.toDTO(user);
-			List<MessageDTO> messageDTOs =new ArrayList<>();
+			List<MessageDTO> messageReciverDTOs =new ArrayList<>();
 			user.getRecive().forEach(item->{
-				messageDTOs.add(messageMapper.toDTO(item));
+				messageReciverDTOs.add(messageMapper.toDTO(item));
 			});
-			userDTO.setMessageDTOs(messageDTOs);
-			return new RepositoryData(ResponseEntity.ok().body(userDTO));
+			user.getSend().forEach(item->{
+				messageReciverDTOs.add(messageMapper.toDTO(item));
+			});
+			Collections.sort(messageReciverDTOs, new Comparator<MessageDTO>() {
+				@Override
+				  public int compare(MessageDTO m1, MessageDTO m2) {
+				    return m2.getSendDate().compareTo(m1.getSendDate());
+				  }
+			});
+			userDTO.setMessageDTOs(messageReciverDTOs);
+			return new RepositoryData(ResponseEntity.ok().body(userDTO.getMessageDTOs()));
 		}
 		else {
 			return new RepositoryData(ResponseEntity.status(HttpStatus.NOT_FOUND).body("Không tìn thấy "+username));
@@ -97,7 +108,7 @@ public class Userimpl implements UserService {
 				postDTOs.add(postMapper.toDTO(item));
 			});
 			userDTO.setPostDTOs(postDTOs);
-			return new RepositoryData(ResponseEntity.ok().body(userDTO));
+			return new RepositoryData(ResponseEntity.ok().body(userDTO.getPostDTOs()));
 		}
 		else {
 			return new RepositoryData(ResponseEntity.status(HttpStatus.NOT_FOUND).body("Không tìn thấy "+username));
@@ -114,7 +125,7 @@ public class Userimpl implements UserService {
 				followDTOs.add(followMapper.toDTO(item));
 			});
 			userDTO.setFollowDTOs(followDTOs);
-			return new RepositoryData(ResponseEntity.ok().body(userDTO));
+			return new RepositoryData(ResponseEntity.ok().body(userDTO.getFollowDTOs()));
 		}
 		else {
 			return new RepositoryData(ResponseEntity.status(HttpStatus.NOT_FOUND).body("Không tìn thấy "+username));

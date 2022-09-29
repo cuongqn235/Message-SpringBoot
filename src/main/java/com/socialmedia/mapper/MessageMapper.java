@@ -25,7 +25,7 @@ public class MessageMapper {
 		dto.setReciverUserName(entity.getReciver().getUsername());
 		dto.setSenderUserName(entity.getSender().getUsername());
 		dto.setText(entity.getText());
-		dto.setSendDate(entity.getSendDate().getTime());
+		dto.setSendDate(entity.getSendDate().toString());
 		return dto;
 	}
 }
